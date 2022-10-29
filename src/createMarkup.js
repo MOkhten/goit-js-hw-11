@@ -1,9 +1,9 @@
 export function createMarkup(photos) {
   return photos
-    .map(({ webformatURL, largeImageURL, tages, likes, views, comments, downloads }) => {
+    .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
       return /*html*/ `<div class="photo-card">
   <a class='link' href="${largeImageURL}">
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" width='200' height='140' />
+  <img src="${webformatURL}" alt="${tags}" loading="lazy" width='250' height='160' />
   <div class="info">
     <p class="info-item">
       <b>Likes</b>${likes}

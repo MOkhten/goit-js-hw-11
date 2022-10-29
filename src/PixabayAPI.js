@@ -3,7 +3,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api/';
 
 export class PixabayAPI {
     #page = 1;
-    #query = '';
+    #searchQuery = '';
     #totalPages = 0;
     #perPage = 40;
     #params = {
@@ -16,17 +16,17 @@ export class PixabayAPI {
 
 
  async getPhotos() {
-    const urlAXIOS = `?key=30858133-3384191e7fc42d639d87c19d3&q=${this.#query}&per_page=${this.#perPage}&page=${this.#page}`;
+    const urlAXIOS = `?key=30858133-3384191e7fc42d639d87c19d3&q=${this.#searchQuery}&per_page=${this.#perPage}&page=${this.#page}`;
      const { data } = await axios.get(urlAXIOS, this.#params);
    return data;
   }
 
-  set query(newQuery) {
-    this.#query = newQuery;
+  set searchQuery(newQuery) {
+    this.#searchQuery = newQuery;
   }
 
-  get query() {
-    return this.#query;
+  get searchQuery() {
+    return this.#searchQuery;
   }
 
   incrementPage() {

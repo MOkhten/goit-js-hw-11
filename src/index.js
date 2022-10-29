@@ -18,24 +18,21 @@ const pixabay = new PixabayAPI();
 
 async function handleSubmit (event) {
     event.preventDefault();
-
-
 const {
-    elements: {query},
+    elements: {searchQuery},
   } = event.currentTarget;
-  const searchQuery = query.value.trim().toLowerCase();
-  if (!searchQuery) {
+  const query = searchQuery.value.trim().toLowerCase();
+  if (!query) {
     return;
   }
-  pixabay.query = searchQuery;
+  pixabay.searchQuery = query;
 
   clearPage();
     try {
         const { hits, total } = await pixabay.getPhotos();
         if (hits.length === 0) {
-            Notify.info(`За вашим запитом
-         ${searchQuery} зображень не знайдено!
-        `);
+            Notify.failure(`Sorry, there are no images matching your search query. Please try again.`
+      );
             return;
 
         }
@@ -44,15 +41,15 @@ const {
 
         pixabay.calculateTotalPages(total);
 
-        Notify.success(`Ми знайшли ${total} зображень по запиту ${searchQuery}`);
+        Notify.success(`Hooray! We found ${total} images.`);
 
         if (pixabay.isShowLoadMore) {
-            refs.loadMoreBtnRef.classList.remove('visually-hidden');
-
+            const target = document.querySelector('.gallery__item:last-child');
+             console.log(target);
             //   io.observe(target);
         }
     } catch (error) {
-        Notify.failure(error.message, 'Щось пішло не так!');
+        console.log(error);
         clearPage();
     }
 };
@@ -71,7 +68,7 @@ function onLoadMore () {
       refs.list.insertAdjacentHTML('beforeend', markup);
     })
     .catch(error => {
-      Notify.failure(error.message, 'Щось пішло не так!');
+      console.log(error);
       clearPage();
     });
 };
