@@ -43,9 +43,10 @@ const {
 
         Notify.success(`Hooray! We found ${total} images.`);
 
-        if (pixabay.isShowLoadMore) {
-            const target = document.querySelector('.gallery__item:last-child');
-             console.log(target);
+      if (pixabay.isShowLoadMore) {
+          refs.loadMoreBtn.classList.remove('is-hidden');
+            // const target = document.querySelector('.gallery__item:last-child');
+            //  console.log(target);
             //   io.observe(target);
         }
     } catch (error) {

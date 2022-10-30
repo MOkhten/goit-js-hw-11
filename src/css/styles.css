@@ -9,7 +9,7 @@ body {
 img {
   display: block;
   max-width: 100%;
-  height: auto;
+  height: 160px;
 }
 
 h1,
@@ -116,11 +116,12 @@ ol {
   padding: 100px 0;
 }
 
-.posts {
+.info {
   display: flex;
   flex-wrap: wrap;
   gap: 30px 5%;
   margin-bottom: 40px;
+  width:  250px;
 }
 
 .posts__item {
@@ -136,8 +137,8 @@ ol {
   margin-bottom: 20px;
 }
 
-.posts__text {
-  font-size: 18px;
+.info-item {
+  font-size: 14px;
   margin-bottom: 10px;
   line-height: 1.4;
 }
