@@ -14,7 +14,40 @@ const refs = {
 refs.form.addEventListener('submit', handleSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
+const options = {
+  root: null,
+  rootMargin: '100px',
+  threshold: 1.0,
+};
+
+const callback = async function (entries, observer) {
+  entries.forEach(async entry => {
+    // if (entry.isIntersecting && entry.intersectionRect.bottom > 550) {
+    if (entry.isIntersecting) {
+      pixabay.incrementPage();
+      observer.unobserve(entry.target);
+
+      try {
+        const { hits } = await pixabay.getPhotos();
+
+        const markup = createMarkup(hits);
+
+        refs.list.insertAdjacentHTML('beforeend', markup);
+        if (pixabay.isShowLoadMore) {
+          const target = document.querySelector('.photo-card:last-child');
+          io.observe(target);
+        }
+      } catch (error) {
+        Notify.failure(error.message, 'Щось пішло не так!');
+        clearPage();
+      }
+    }
+  });
+};
+
 const pixabay = new PixabayAPI();
+
+const io = new IntersectionObserver(callback, options);
 
 async function handleSubmit (event) {
     event.preventDefault();
@@ -44,10 +77,10 @@ const {
         Notify.success(`Hooray! We found ${total} images.`);
 
       if (pixabay.isShowLoadMore) {
-          refs.loadMoreBtn.classList.remove('is-hidden');
-            // const target = document.querySelector('.gallery__item:last-child');
-            //  console.log(target);
-            //   io.observe(target);
+          // refs.loadMoreBtn.classList.remove('is-hidden');
+            const target = document.querySelector('.photo-card:last-child');
+             console.log(target);
+              io.observe(target);
         }
     } catch (error) {
         console.log(error);
