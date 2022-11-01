@@ -40,6 +40,7 @@ const callback = async function (entries, observer) {
         if (pixabay.isShowLoadMore) {
           const target = document.querySelector('.photo-card:last-child');
           io.observe(target);
+          lightbox.refresh();
         }
       } catch (error) {
         Notify.failure(error.message, 'Щось пішло не так!');
