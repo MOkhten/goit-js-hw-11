@@ -3,6 +3,8 @@ import axios from 'axios';
 import { PixabayAPI } from './PixabayAPI';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { createMarkup } from './createMarkup';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 const refs = {
@@ -13,6 +15,8 @@ const refs = {
 
 refs.form.addEventListener('submit', handleSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
+
+
 
 const options = {
   root: null,
@@ -47,6 +51,11 @@ const callback = async function (entries, observer) {
 
 const pixabay = new PixabayAPI();
 
+const lightbox = new SimpleLightbox('.gallery a', { 
+        captionData: 'alt',
+        captionDelay: '250',
+  });
+
 const io = new IntersectionObserver(callback, options);
 
 async function handleSubmit (event) {
@@ -80,7 +89,8 @@ const {
           // refs.loadMoreBtn.classList.remove('is-hidden');
             const target = document.querySelector('.photo-card:last-child');
              console.log(target);
-              io.observe(target);
+             io.observe(target);
+             lightbox.refresh();
         }
     } catch (error) {
         console.log(error);
@@ -105,6 +115,7 @@ function onLoadMore () {
       console.log(error);
       clearPage();
     });
+
 };
  
 
